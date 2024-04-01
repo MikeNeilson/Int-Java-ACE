@@ -6,10 +6,16 @@ import java.lang.annotation.Target;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 //import java.time.*;
 
 @Target({ElementType.TYPE_USE})
 @interface LookAtMe{}
+
+enum COURSE {
+  MATH, PHYSICS, CHEMISTRY;
+}
 
 public class Student {
 
@@ -77,18 +83,30 @@ public class Student {
 }
 
 class UseStudent {
-  public static void showAll(ArrayList<Student> als) {
+//  public static void showAll(ArrayList<Student> als) {
+  public static void showAll(List<Student> als) {
     for (Student s : als) {
       System.out.println(s);
     }
   }
 
-  public static void showAllSmart(ArrayList<Student> als, double smartThreshold) {
+//  public static void showAllSmart(ArrayList<Student> als, double smartThreshold) {
+  public static void showAllSmart(List<Student> als, double smartThreshold) {
     for (Student s : als) {
       if (s.getGpa() > smartThreshold) {
         System.out.println(s);
       }
     }
+  }
+
+  public static List<Student> getAllSmart(List<Student> als, double smartThreshold) {
+    ArrayList<Student> results = new ArrayList<>();
+    for (Student s : als) {
+      if (s.getGpa() > smartThreshold) {
+        results.add(s);
+      }
+    }
+    return results;
   }
 
 //  private static double smartThreshold = 3.0;
@@ -111,7 +129,9 @@ class UseStudent {
 //    System.out.println("Student s is: " + s);
 //    System.out.println(getName());
 
-    ArrayList<Student> als = new ArrayList<Student>();
+//    ArrayList<Student> als = new ArrayList<Student>();
+//    List<Student> als = new ArrayList<Student>();
+    List<Student> als = new LinkedList<Student>();
     als.add(s);
     als.add(s2);
     als.add(s3);
@@ -123,6 +143,8 @@ class UseStudent {
     System.out.println("--------------------");
     showAll(als);
     System.out.println("--------------------");
-//    showAllSmart(als);
+    showAllSmart(als, 3.0);
+    System.out.println("--------------------");
+    showAll(getAllSmart(als, 3.0));
   }
 }

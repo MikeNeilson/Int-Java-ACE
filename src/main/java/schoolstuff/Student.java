@@ -123,6 +123,6 @@ class UseStudent {
     System.out.println("--------------------");
     showAll(als);
     System.out.println("--------------------");
-    showAllSmart(als);
+//    showAllSmart(als);
   }
 }

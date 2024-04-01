@@ -14,12 +14,19 @@ public class Sport {
     return name;
   }
 
+
   private static Map<String, Sport> values = new HashMap<>();
   public static Sport of(String s) {
     // do we have a Sport for this String?
-    // if so, return it to the caller
+    Sport retval = values.get(s);
+    if (retval == null) {
+      retval = new Sport(s);
+      values.put(s, retval);
+    }
     // if not, make one, add it to the map, and then return that
 
+    // if so, return it to the caller
+    return retval;
   }
 
 }
@@ -32,11 +39,16 @@ class UseSport {
   }
 
   public static void main(String[] args) {
-    Sport s1 = new Sport("Cricket");
-    Sport s2 = new Sport("Cricket");
-    Sport s3 = new Sport("Shinty");
+//    Sport s1 = new Sport("Cricket");
+//    Sport s2 = new Sport("Cricket");
+//    Sport s3 = new Sport("Shinty");
+
+    Sport s1 = Sport.of("Cricket");
+    Sport s2 = Sport.of("Cricket");
+    Sport s3 = Sport.of("Shinty");
 
     System.out.println(s1 == s2);
+    System.out.println(s1 == s3);
 
     System.out.println(expressOpionion(s1));
     System.out.println(expressOpionion(s2));

@@ -17,6 +17,17 @@ enum COURSE {
   MATH, PHYSICS, CHEMISTRY;
 }
 
+class VIPStudent extends Student {
+  public VIPStudent(String name, LocalDate enrollDate, double gpa) {
+    super(name, enrollDate, gpa);
+  }
+
+  @Override
+  public void setGpa(double gpa) {
+    super.setGpa(gpa + 0.5);
+  }
+}
+
 public class Student {
 
   private String name;
@@ -29,6 +40,12 @@ public class Student {
 //    enrollDate = LocalDate.now();
     this("Unknown", LocalDate.now());
   }*/
+
+//  public Student(String studenName, String majorName) {}
+//  public Student(String studentName, String parentName) {}
+
+  public static Student ofStudentNameMajorName(String studenName, String majorName) {return null;}
+  public static Student ofStudentNameParentName(String studenName, String parentName) {return null;}
 
   public /*no return type*/ Student(String name, LocalDate enrollDate, double gpa) {
     if (! isValid(name, enrollDate, gpa)) {
@@ -80,6 +97,13 @@ public class Student {
     return (name != null && name.length() > 0 && gpa >= 0 && gpa <= 5.0 && enrollDate != null);
   }
 
+  public static Student of(String name, LocalDate enrollDate, double gpa, int contrib) {
+    if (contrib > 10_000) {
+      return new VIPStudent(name, enrollDate, gpa + 0.5);
+    } else {
+      return new Student(name, enrollDate, gpa);
+    }
+  }
 }
 
 class UseStudent {
@@ -146,5 +170,10 @@ class UseStudent {
     showAllSmart(als, 3.0);
     System.out.println("--------------------");
     showAll(getAllSmart(als, 3.0));
+
+    Student special = new VIPStudent("Algernon", LocalDate.now(), 2.2);
+    System.out.println(special);
+    special.setGpa(2.4);
+    System.out.println(special);
   }
 }

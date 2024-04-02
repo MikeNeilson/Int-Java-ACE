@@ -17,11 +17,17 @@ public class Customer {
 
   @Override
   public boolean equals(Object other) {
-    if (other instanceof Customer) {
-      Customer otherC = (Customer)other;
-      return otherC.name.equals(this.name) && otherC.address.equals(this.address);
-    }
-    return false;
+//    if (other instanceof Customer) {
+//      Customer otherC = (Customer)other;
+
+//    if (other instanceof Customer otherC) {
+//      return otherC.name.equals(this.name) && otherC.address.equals(this.address);
+//    }
+//    return false;
+
+    return other instanceof Customer otherC
+        && this.name.equals(otherC.name)
+        && this.address.equals(otherC.address);
   }
 
   @Override

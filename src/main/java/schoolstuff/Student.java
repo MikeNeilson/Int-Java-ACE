@@ -6,6 +6,7 @@ import java.lang.annotation.Target;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 //import java.time.*;
@@ -106,6 +107,20 @@ public class Student {
   }
 }
 
+class StudentGradeCompartor implements Comparator<Student> {
+  @Override
+  public int compare(Student o1, Student o2) {
+    return Double.compare(o1.getGpa(), o2.getGpa());
+  }
+}
+
+class StudentReverseGradeComparator implements Comparator<Student> {
+  @Override
+  public int compare(Student o1, Student o2) {
+    return Double.compare(o2.getGpa(), o1.getGpa());
+  }
+}
+
 class UseStudent {
 //  public static void showAll(ArrayList<Student> als) {
   public static void showAll(List<Student> als) {
@@ -143,10 +158,12 @@ class UseStudent {
 //    }
 //  }
 
+
+
   public static void main(String [] args) {
     System.out.println("Hello");
     Student s = new Student("Albert", LocalDate.now(), 3.5);
-    Student s2 = new Student("Freddie", LocalDate.now().minusDays(10), 2.8);
+    Student s2 = new Student("Freddie", LocalDate.now().plusDays(10), 2.8);
     Student s3 = new Student("Jim", LocalDate.now().minusDays(300), 2.2);
     Student s4 = new Student("Sheila", LocalDate.now().minusDays(75), 4.5);
 //    System.out.println(s.getName());
@@ -175,5 +192,35 @@ class UseStudent {
     System.out.println(special);
     special.setGpa(2.4);
     System.out.println(special);
+    System.out.println("--------------------");
+    System.out.println("All students");
+    System.out.println(als);
+    als.sort(new StudentGradeCompartor());
+    System.out.println("Sorted students by grade");
+    System.out.println(als);
+    als.sort(new StudentReverseGradeComparator());
+    System.out.println("Sorted students by reverse grade");
+    System.out.println(als);
+    System.out.println("--------------------");
+    als.sort(
+    /*class StudentGradeCompartor implements*/ new Comparator<Student>() {
+      @Override
+      public int compare(Student o1, Student o2) {
+        return Double.compare(o1.getGpa(), o2.getGpa());
+      }
+    }
+    );
+
+    als.sort(//new Comparator<Student>() {
+//      @Override
+//      public int compare(var o1, var o2) -> {
+//      public int compare(o1, o2) -> {
+//      public int compare(Student o1, Student o2) -> {
+//        (o1, o2) -> { return o1.getEnrollDate().compareTo(o2.getEnrollDate()); }
+        (o1, o2) -> o1.getEnrollDate().compareTo(o2.getEnrollDate())
+    /*}*/);
+
+
+
   }
 }

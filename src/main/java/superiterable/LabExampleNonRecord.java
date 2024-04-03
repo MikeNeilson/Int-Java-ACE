@@ -38,7 +38,31 @@ public class LabExampleNonRecord {
         .forEach(s -> System.out.println(s));
     System.out.println("-----------------------");
 
+    sis
+        .flatMap(s -> new SuperIterable<>(s.getCourses()))
+        .forEach(s -> System.out.println(s));
+    System.out.println("-----------------------");
 
+    sis
+        .filter(s -> s.getGpa() > 3.0)
+        .flatMap(s -> new SuperIterable<>(s.getCourses()))
+        .map(s -> "a smart student takes " + s)
+        .forEach(s -> System.out.println(s));
+    System.out.println("-----------------------");
+
+    sis
+        .filter(s -> s.getGpa() > 3.0)
+//        .flatMap(
+//            (StudentNonRecord s) -> {
+//              return new SuperIterable<>(s.getCourses()).map(c -> "Student " + s.getName() + " takes " + c);
+//            }
+//        )
+        .flatMap(s -> new SuperIterable<>(s.getCourses()).map(c -> "Student " + s.getName() + " takes " + c))
+        .forEach(s -> System.out.println(s));
+    System.out.println("-----------------------");
+
+
+/*
     Function<StudentNonRecord, List<String>> fsi = s -> s.getCourses();
 //    Object fsi = s -> s.getCourses();
     Class cl = fsi.getClass();
@@ -47,5 +71,6 @@ public class LabExampleNonRecord {
     for (Method m : methods) {
       System.out.println(m);
     }
+*/
   }
 }

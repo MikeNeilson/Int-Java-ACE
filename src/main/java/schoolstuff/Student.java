@@ -48,6 +48,10 @@ public class Student {
   public static Student ofStudentNameMajorName(String studenName, String majorName) {return null;}
   public static Student ofStudentNameParentName(String studenName, String parentName) {return null;}
 
+  public static Student of(String name, LocalDate enrollDate, double gpa) {
+    return new Student(name, enrollDate, gpa);
+  }
+
   public /*no return type*/ Student(String name, LocalDate enrollDate, double gpa) {
     if (! isValid(name, enrollDate, gpa)) {
       throw new IllegalArgumentException("Bad Student Data");

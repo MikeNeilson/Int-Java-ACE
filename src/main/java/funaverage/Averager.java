@@ -28,20 +28,26 @@ class Average {
 
 public class Averager {
   public static void main(String[] args) {
-    DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-1, +1))
-        .limit(10_000_000)
-        .mapToObj(x ->  new Average(x, 1))
+    final long COUNT = 1_000_000_000;
+    long start = System.nanoTime();
+    Average res = DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-1, +1))
+        .parallel()
+        .limit(COUNT)
+        .mapToObj(x -> new Average(x, 1))
         .reduce(
-            new Average(0,0),
+            new Average(0, 0),
 //            (a1, a2) -> a1.merge(a2))
-            Average::merge)
-        .get()
+            Average::merge);
+    long time = System.nanoTime() - start;
+    res.get()
         .map(v -> "The average is " + v)
         .ifPresentOrElse(
 //            s -> System.out.println(s),
             System.out::println,
             () -> System.out.println("oops, there was no data")
         );
-
+    System.out.printf("Time taken was %7.3f, rate is %7.3f per millisecond\n",
+        (time / 1_000_000_000.0),
+        (COUNT / (time / 1_000_000.0)));
   }
 }

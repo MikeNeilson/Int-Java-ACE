@@ -20,6 +20,10 @@ interface Z extends X, Y {
 
 
 public class Example {
+  // Create this:
+  getInversePredicate...
+  // return a predicate that tests the exact opposite of the argument predicate
+
   public static <T> Predicate<T> getBothPredicate(Predicate<T> ps1, Predicate<T> ps2) {
     return s -> ps1.test(s) && ps2.test(s);
   }
@@ -57,5 +61,14 @@ public class Example {
     Stream.of("Fred", "Jim", "Shiela", "Alice", "Bob")
         .filter(both)
         .forEach(System.out::println);
+
+    System.out.println("-------------------");
+    lsp = getLongStringPredicate(5);
+    Predicate<String> notLongString = getInversePredicate(lsp);
+    Stream.of("Fred", "Jim", "Shiela", "Alice", "Bob")
+        .filter(notLongString)
+        .forEach(System.out::println);
+
+
   }
 }

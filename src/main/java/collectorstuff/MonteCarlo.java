@@ -1,5 +1,6 @@
 package collectorstuff;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -25,8 +26,14 @@ public class MonteCarlo {
     long width = 110;
     long divisor = maxCount / width;
 
+    Comparator<Map.Entry<Integer, Long>> intComp = Comparator.comparingInt(Map.Entry::getKey);
+    Comparator<Map.Entry<Integer, Long>> revIntComp =
+        Comparator.<Map.Entry<Integer, Long>>comparingInt(Map.Entry::getKey).reversed();
+//    Comparator<Map.Entry<Integer, Long>> revIntComp = intComp.reversed();
     map.entrySet().stream()
-        .sorted((e1, e2) -> Integer.compare(e1.getKey(), e2.getKey()))
+//        .sorted((e1, e2) -> Integer.compare(e1.getKey(), e2.getKey()))
+//        .sorted(Comparator.comparingInt(Map.Entry::getKey))
+        .sorted()
         .map(e -> String.format("%3d: %s",
             e.getKey(),
             Stream.generate(() -> "*")

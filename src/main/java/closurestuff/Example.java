@@ -21,7 +21,9 @@ interface Z extends X, Y {
 
 public class Example {
   // Create this:
-  getInversePredicate...
+  public static <T> Predicate<T> getInversePredicate(Predicate<T> pred) {
+    return s -> !pred.test(s);
+  }
   // return a predicate that tests the exact opposite of the argument predicate
 
   public static <T> Predicate<T> getBothPredicate(Predicate<T> ps1, Predicate<T> ps2) {
